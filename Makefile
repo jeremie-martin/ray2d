@@ -1,7 +1,7 @@
 TARGET_FILE		:= ray2d
 ARGS			:= 
 DEFINES			:=
-SRC_FILES		:= main.cpp Raytracer.cpp Ray.cpp WindowWrapper.cpp Renderer.cpp PointLight.cpp Color.cpp Obstacle/Segment.cpp
+SRC_FILES		:= main.cpp PointLight.cpp Color.cpp Obstacle/Obstacle.cpp Obstacle/Segment.cpp Ray.cpp Raytracer.cpp WindowWrapper.cpp Renderer.cpp
 SRC_PREFIX		:= src/
 INCLUDE_DIRS	:= include/
 LIBRARY_DIRS	:= lib/

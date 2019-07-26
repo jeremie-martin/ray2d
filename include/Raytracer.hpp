@@ -3,6 +3,7 @@
 #include <random>
 
 #include "Light/PointLight.hpp"
+#include "Obstacle/Segment.hpp"
 #include "Renderer.hpp"
 #include "Ray.hpp"
 #include "Utils.hpp"

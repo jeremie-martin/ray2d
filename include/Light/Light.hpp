@@ -8,8 +8,7 @@ namespace Ray2d {
     namespace Computations {        
         class Light {
         public:
-            virtual ~Light() = default;
-            virtual Ray generateRay(void);
+            virtual Ray generateRay(void) = 0;
         };
     }
 }
