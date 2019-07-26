@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Obstacle.hpp"
+
+#include "Obstacle/Obstacle.hpp"
 
 namespace Ray2d {
     namespace Computations {
@@ -11,7 +12,7 @@ namespace Ray2d {
 
         public:
             Segment(glm::vec2 p1, glm::vec2 p2);
-            virtual std::optional<glm::vec2> rayIntersect(Ray &ray) override;
+            virtual float rayIntersect(Ray &ray) override;
         };
     }
 }

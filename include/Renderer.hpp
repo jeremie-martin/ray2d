@@ -74,19 +74,18 @@ namespace Ray2d {
 
             double compute_time;
             double draw_time;
-            double ray_nb;
 
             bool *compute;
 
-            void imgui_update(void);
+            void imgui_update(const int &ray_nb);
             void imgui_render(void);
-            void draw(std::vector<glm::vec2> &rayVertices, std::vector<glm::vec3> &rayColor);
+            void draw(std::vector<glm::vec2> &rayVertices, std::vector<glm::vec3> &rayColor, const int &ray_nb);
 
         public:
             Renderer(WindowWrapper &wrap, const int MSAA=1);
             ~Renderer() {};
 
-            int update(std::vector<glm::vec2> &rayVertices, std::vector<glm::vec3> &rayColor, double compute_time, bool &compute);
+            int update(std::vector<glm::vec2> &rayVertices, std::vector<glm::vec3> &rayColor, const int &ray_nb, double compute_time, bool &compute);
         };
     }
 }

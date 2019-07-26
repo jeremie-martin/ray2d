@@ -96,24 +96,24 @@ namespace Ray2d {
             shader_post->setInt("screenTexture", 0);
         }
 
-        int Renderer::update(std::vector<glm::vec2> &rayVertices, std::vector<glm::vec3> &rayColor, double compute_time, bool &compute) {
+        int Renderer::update(std::vector<glm::vec2> &rayVertices, std::vector<glm::vec3> &rayColor, const int &ray_nb, double compute_time, bool &compute) {
             this->compute = &compute;
-
-            this->ray_nb = double(rayVertices.size() / 2);
             this->compute_time = compute_time;
+
             glfwPollEvents();
             win_wrapper->processInput();
 
             if(glfwWindowShouldClose(window))
                 return WINDOW_CLOSE;
+
             static bool first = true;
-            if((rand()%10) == 0 || first) {
-            imgui_update();
-            first = false;
+            if((rand() % 10) == 0 || first) {
+                imgui_update(ray_nb);
+                first = false;
             }
 
             if(compute)
-                draw(rayVertices, rayColor);
+                draw(rayVertices, rayColor, ray_nb);
             
             imgui_render();
 
@@ -122,13 +122,13 @@ namespace Ray2d {
             return WINDOW_OPEN;
         }
 
-        void Renderer::draw(std::vector<glm::vec2> &rayVertices, std::vector<glm::vec3> &rayColor) {
+        void Renderer::draw(std::vector<glm::vec2> &rayVertices, std::vector<glm::vec3> &rayColor, const int &ray_nb) {
             double start_draw = glfwGetTime();
             
             glBindBuffer(GL_ARRAY_BUFFER, rayVBO_points);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(rayVertices[0]) * rayVertices.size(), rayVertices.data(), GL_DYNAMIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(rayVertices[0]) * ray_nb, rayVertices.data(), GL_DYNAMIC_DRAW);
             glBindBuffer(GL_ARRAY_BUFFER, rayVBO_colors);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(rayColor[0]) * rayColor.size(), rayColor.data(), GL_DYNAMIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(rayColor[0]) * ray_nb, rayColor.data(), GL_DYNAMIC_DRAW);
 
             // Draw scene as normal in multisampled buffers
             glBindFramebuffer(GL_FRAMEBUFFER, framebuffer_MSAA);
@@ -140,7 +140,7 @@ namespace Ray2d {
             shader_ray->setMat4("view", camera->GetViewMatrix());
             shader_ray->setMat4("model", glm::mat4(1.0f));
             glBindVertexArray(rayVAO);
-            glDrawArrays(GL_LINES, 0, rayVertices.size());
+            glDrawArrays(GL_LINES, 0, ray_nb);
 
             // Blit multisampled buffer to normal colorbuffer of intermediate FBO
             glBindFramebuffer(GL_READ_FRAMEBUFFER, framebuffer_MSAA);
@@ -171,7 +171,7 @@ namespace Ray2d {
             draw_time = glfwGetTime() - start_draw;
         }
 
-        void Renderer::imgui_update(void) {
+        void Renderer::imgui_update(const int &ray_nb) {
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
@@ -200,11 +200,11 @@ namespace Ray2d {
 
             if(*compute) {
                 char compute_time_str[100];
-                sprintf(compute_time_str, "Compute: %dK/s", int((ray_nb / compute_time) / 1000.0));
+                sprintf(compute_time_str, "Compute: %dK/s", int((double(ray_nb / 2) / compute_time) / 1000.0));
                 ImGui::Text(compute_time_str);
 
                 char draw_time_str[100];
-                sprintf(draw_time_str, "Draw:    %dK/s", int((ray_nb / draw_time) / 1000.0));
+                sprintf(draw_time_str, "Draw:    %dK/s", int((double(ray_nb / 2) / draw_time) / 1000.0));
                 ImGui::Text(draw_time_str);
             }
  

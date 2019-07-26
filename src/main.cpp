@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
     Ray2d::Graphics::WindowWrapper winWrap(1270, 720);
     Ray2d::Graphics::Renderer renderer(winWrap, 1);
-    Ray2d::Computations::Raytracer raytracer(renderer, 100000);
+    Ray2d::Computations::Raytracer raytracer(renderer, 100000, 4);
     
     raytracer.run();
 
