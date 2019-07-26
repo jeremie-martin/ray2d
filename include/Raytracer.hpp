@@ -4,6 +4,7 @@
 
 #include "Light/Light.hpp"
 #include "Light/PointLight.hpp"
+#include "Light/SegmentLight.hpp"
 #include "Obstacle/Obstacle.hpp"
 #include "Obstacle/Segment.hpp"
 #include "Renderer.hpp"
@@ -30,7 +31,9 @@ namespace Ray2d {
             int batch;
             int max_depth;
             bool compute;
-    
+            
+            Light *chooseLight(void);
+            std::vector<float> constructVectorOfLigthIntensity(void);
             void rayTrace(Ray &ray);
             void addRayToBatch(Ray &ray, float dist);
 

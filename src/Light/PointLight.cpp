@@ -2,9 +2,9 @@
 
 namespace Ray2d {
     namespace Computations {
-        PointLight::PointLight(glm::vec2 pos) : pos(pos), type(RAINBOW) {}
-        PointLight::PointLight(glm::vec2 pos, int wavelength) : pos(pos), monochromaticWavelength(wavelength), type(MONOCHROMATIC) {}
-        PointLight::PointLight(glm::vec2 pos, std::vector<int> wavelengths) : pos(pos), wavelengths(wavelengths), type(POLYCHROMATIC) {}
+        PointLight::PointLight(glm::vec2 pos, float intensity) : pos(pos), type(RAINBOW), intensity(intensity) {}
+        PointLight::PointLight(glm::vec2 pos, int wavelength, float intensity) : pos(pos), monochromaticWavelength(wavelength), type(MONOCHROMATIC), intensity(intensity) {}
+        PointLight::PointLight(glm::vec2 pos, std::vector<int> wavelengths, float intensity) : pos(pos), wavelengths(wavelengths), type(POLYCHROMATIC), intensity(intensity) {}
 
         Ray PointLight::generateRay(void) {
             static std::random_device rd;
@@ -31,6 +31,10 @@ namespace Ray2d {
             //printf("%d\n", color);
                 
             return Ray(pos, glm::vec2(cos(angle), sin(angle)), color);
+        }
+
+        float PointLight::getIntensity(void) {
+            return intensity;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Ray2d {
         class Light {
         public:
             virtual Ray generateRay(void) = 0;
+            virtual float getIntensity(void) = 0;
         };
     }
 }

@@ -9,9 +9,12 @@ namespace Ray2d {
         }
 
         void Raytracer::run(void) {
-            //obstacle.push_back(new Segment(glm::vec2(0.5f, -0.2f), glm::vec2(0.7, 0.3f)));
-            //obstacle.push_back(new Segment(glm::vec2(0.1, 0.7f), glm::vec2(0.2, 0.1f)));
-            light.push_back(new PointLight(glm::vec2(0.0f, 0.0f)));
+            obstacle.push_back(new Segment(glm::vec2(0.5f, -0.2f), glm::vec2(0.7, 0.3f)));
+            obstacle.push_back(new Segment(glm::vec2(-1.5, 0.7f), glm::vec2(-1.2f, 0.1f)));
+            obstacle.push_back(new Segment(glm::vec2(-0.4, -0.4f), glm::vec2(-0.2f, -0.6f)));
+            light.push_back(new SegmentLight(glm::vec2(-0.3f, -0.2f), glm::vec2(-0.8f, 0.5f), 1.0f));
+            light.push_back(new PointLight(glm::vec2(0.6f, 0.4f), std::vector<int>({450, 550, 650}), 20.0f));
+            light.push_back(new PointLight(glm::vec2(-1.0f, 0.8f), std::vector<int>({450, 475, 500}), 5.0f));
             
             obstacle_nb = obstacle.size();
             light_nb = light.size();
@@ -21,7 +24,7 @@ namespace Ray2d {
                 
                 if(compute)
                     while(ray_ind < batch) {
-                        Ray ray = light[rand() % light_nb]->generateRay();
+                        Ray ray = chooseLight()->generateRay();
                         rayTrace(ray);
                     }
    
@@ -29,6 +32,23 @@ namespace Ray2d {
                     break;
                 ray_ind = 0;
             }
+        }
+
+        std::vector<float> Raytracer::constructVectorOfLigthIntensity(void) {
+            std::vector<float> lightIntensity;
+            for(auto &l: light)
+                lightIntensity.push_back(l->getIntensity());
+
+            return lightIntensity;
+        }
+
+        Light *Raytracer::chooseLight(void) {
+            static std::random_device rd;
+            static std::mt19937 gen(rd());
+            static std::vector<float> ligthIntensity = constructVectorOfLigthIntensity();
+            static std::discrete_distribution<> d(ligthIntensity.begin(), ligthIntensity.end());
+
+            return light[d(gen)];
         }
 
         void Raytracer::addRayToBatch(Ray &ray, float dist) {
