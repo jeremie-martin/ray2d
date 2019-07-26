@@ -9,10 +9,9 @@ namespace Ray2d {
         }
 
         void Raytracer::run(void) {
-            obstacle.push_back(new Segment(glm::vec2(0.5f, -0.2f), glm::vec2(0.7, 0.3f)));
-            obstacle.push_back(new Segment(glm::vec2(0.1, 0.7f), glm::vec2(0.2, 0.1f)));
-            light.push_back(new PointLight(glm::vec2(-0.6f, 0.5f), std::vector({500, 600, 700})));
-            light.push_back(new PointLight(glm::vec2(0.7f, 0.8f), std::vector({450, 451, 452, 500})));
+            //obstacle.push_back(new Segment(glm::vec2(0.5f, -0.2f), glm::vec2(0.7, 0.3f)));
+            //obstacle.push_back(new Segment(glm::vec2(0.1, 0.7f), glm::vec2(0.2, 0.1f)));
+            light.push_back(new PointLight(glm::vec2(0.0f, 0.0f)));
             
             obstacle_nb = obstacle.size();
             light_nb = light.size();
