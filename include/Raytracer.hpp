@@ -34,8 +34,8 @@ namespace Ray2d {
             
             Light *chooseLight(void);
             std::vector<float> constructVectorOfLigthIntensity(void);
-            void rayTrace(Ray &ray);
-            void addRayToBatch(Ray &ray, float dist);
+            void rayTrace(Ray &ray, int depth = 0);
+            void addRayToBatch(glm::vec2 &p1, glm::vec2 &p2, int color);
 
         public:
             Raytracer(Graphics::Renderer &renderer, const int batch, const int max_depth);

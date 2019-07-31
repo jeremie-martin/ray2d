@@ -18,10 +18,13 @@ namespace Ray2d {
             glm::vec2 getPoint(float dist);
             glm::vec2 getOrigin(void);
             glm::vec2 getDir(void);
+
             int getColor(void);
             void setOrigin(const glm::vec2 &newOrigin);
             void setDir(const glm::vec2 &newDir);
             void setColor(const int &newColor);
+
+            void reflect(glm::vec2 normal);
         };
     }
 }

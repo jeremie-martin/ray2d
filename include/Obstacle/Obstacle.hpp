@@ -13,6 +13,7 @@ namespace Ray2d {
         class Obstacle {
         public:
             virtual float rayIntersect(Ray &ray) = 0;
+            virtual glm::vec2 getNormal(glm::vec2 point) = 0;
         };
 
     }

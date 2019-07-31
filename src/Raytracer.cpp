@@ -9,12 +9,12 @@ namespace Ray2d {
         }
 
         void Raytracer::run(void) {
-            obstacle.push_back(new Segment(glm::vec2(0.5f, -0.2f), glm::vec2(0.7, 0.3f)));
+            obstacle.push_back(new Segment(glm::vec2(0.5f, -0.4f), glm::vec2(0.7, 0.3f)));
             obstacle.push_back(new Segment(glm::vec2(-1.5, 0.7f), glm::vec2(-1.2f, 0.1f)));
             obstacle.push_back(new Segment(glm::vec2(-0.4, -0.4f), glm::vec2(-0.2f, -0.6f)));
-            light.push_back(new SegmentLight(glm::vec2(-0.3f, -0.2f), glm::vec2(-0.8f, 0.5f), 1.0f));
-            light.push_back(new PointLight(glm::vec2(0.6f, 0.4f), std::vector<int>({450, 550, 650}), 20.0f));
-            light.push_back(new PointLight(glm::vec2(-1.0f, 0.8f), std::vector<int>({450, 475, 500}), 5.0f));
+            //light.push_back(new SegmentLight(glm::vec2(-0.3f, -0.2f), glm::vec2(-0.8f, 0.5f), 1.0f));
+            //light.push_back(new PointLight(glm::vec2(0.6f, 0.4f), std::vector<int>({450, 550, 650}), 20.0f));
+            light.push_back(new PointLight(glm::vec2(-1.0f, 0.8f), std::vector<int>({425, 450, 475, 500, 525, 550}), 5.0f));
             
             obstacle_nb = obstacle.size();
             light_nb = light.size();
@@ -51,16 +51,19 @@ namespace Ray2d {
             return light[d(gen)];
         }
 
-        void Raytracer::addRayToBatch(Ray &ray, float dist) {
-            rayVertice[ray_ind] = ray.getOrigin();
-            rayColor[ray_ind] = Graphics::wavelengthToRGB(ray.getColor());
-            rayVertice[ray_ind + 1] = rayVertice[ray_ind] + ray.dir * dist;
+        void Raytracer::addRayToBatch(glm::vec2 &p1, glm::vec2 &p2, int color) {
+            rayVertice[ray_ind] = p1;
+            rayColor[ray_ind] = Graphics::wavelengthToRGB(color);
+            rayVertice[ray_ind + 1] = p2;
             rayColor[ray_ind + 1] = rayColor[ray_ind];
 
             ray_ind += 2;
         }
 
-        void Raytracer::rayTrace(Ray &ray) {
+        void Raytracer::rayTrace(Ray &ray, int depth) {
+            if(depth >= max_depth)
+                return;
+
             Obstacle *obstacle_nearest = nullptr;
             float distance_nearest = INF;
             for(auto &o: obstacle) {
@@ -71,7 +74,14 @@ namespace Ray2d {
                 }
             }
 
-            addRayToBatch(ray, distance_nearest);
+            glm::vec2 intersection = ray.getPoint(distance_nearest);
+            addRayToBatch(ray.origin, intersection, ray.color);
+
+            if(obstacle_nearest != nullptr) {            
+                ray.origin = (0.00001f * ray.origin) + (intersection * 0.99999f);
+                ray.reflect(obstacle_nearest->getNormal(intersection));
+                rayTrace(ray, depth + 1);
+            }
         }
     }
 }

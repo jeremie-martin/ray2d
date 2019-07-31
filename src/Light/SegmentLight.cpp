@@ -4,16 +4,16 @@ namespace Ray2d {
     namespace Computations {
         SegmentLight::SegmentLight(glm::vec2 p1, glm::vec2 p2, float intensity) : p1(p1), p2(p2), intensity(intensity), type(RAINBOW) {
             glm::vec2 vec_p1_p2 = p2 - p1;
-            normal = glm::vec2(-vec_p1_p2[1], vec_p1_p2[0]);
+            normal = glm::vec2(-vec_p1_p2.y, vec_p1_p2.x);
         }
 
         SegmentLight::SegmentLight(glm::vec2 p1, glm::vec2 p2, int wavelength, float intensity) : p1(p1), p2(p2), monochromaticWavelength(wavelength), intensity(intensity), type(MONOCHROMATIC) {
             glm::vec2 vec_p1_p2 = p2 - p1;
-            normal = glm::vec2(-vec_p1_p2[1], vec_p1_p2[0]);
+            normal = glm::vec2(-vec_p1_p2.y, vec_p1_p2.x);
         }
         SegmentLight::SegmentLight(glm::vec2 p1, glm::vec2 p2, std::vector<int> wavelengths, float intensity) : p1(p1), p2(p2), wavelengths(wavelengths), intensity(intensity), type(POLYCHROMATIC) {
             glm::vec2 vec_p1_p2 = p2 - p1;
-            normal = glm::vec2(-vec_p1_p2[1], vec_p1_p2[0]);
+            normal = glm::vec2(-vec_p1_p2.y, vec_p1_p2.x);
         }
         Ray SegmentLight::generateRay(void) {
             static std::random_device rd;

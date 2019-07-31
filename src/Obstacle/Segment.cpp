@@ -2,7 +2,10 @@
 
 namespace Ray2d {
     namespace Computations {
-        Segment::Segment(glm::vec2 p1, glm::vec2 p2) : p1(p1), p2(p2) {}
+        Segment::Segment(glm::vec2 p1, glm::vec2 p2) : p1(p1), p2(p2) {
+            glm::vec2 vec_p1_p2 = p2 - p1;
+            normal = glm::vec2(-vec_p1_p2[1], vec_p1_p2[0]);
+        }
 
         float Segment::rayIntersect(Ray &ray)  {
             glm::vec2 v1 = ray.origin - p1;
@@ -19,6 +22,10 @@ namespace Ray2d {
                 return NO_INTERSECTION;
 
             return t1;
+        }
+
+        glm::vec2 Segment::getNormal(glm::vec2 point) {
+            return normal;
         }
     }
 }
