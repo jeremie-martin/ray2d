@@ -11,7 +11,7 @@ namespace Ray2d {
             glm::vec2 p1;
             glm::vec2 p2;
             glm::vec2 normal;
-            Material *material;
+            Material material;
 
             Segment(glm::vec2 p1, glm::vec2 p2, Material material);
             virtual float rayIntersect(Ray &ray) override;

@@ -44,7 +44,7 @@ namespace Ray2d {
             void addRayToBatch(glm::vec2 &p1, glm::vec2 &p2, int color);
 
         public:
-            Raytracer(Graphics::Renderer &renderer, const int batch, const int max_depth);
+            Raytracer(Graphics::Renderer &renderer, std::vector<Obstacle*> &obstacle, std::vector<Light*> &light, const int batch, const int max_depth);
             void run(void);
         };
     }

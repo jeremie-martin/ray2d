@@ -2,12 +2,12 @@
 #include <stdio.h>
 namespace Ray2d {
     namespace Computations {
+        Material::Material(void) : absorption(0.0f), mirror(0.0f), fresnel(0.0f), ior(0.0f) { }
         Material::Material(float absorption, float mirror, float fresnel, float ior) : ior(ior) {
-            glm::vec3 v(absorption, mirror, fresnel);
-            v = glm::normalize(v);
-            this->absorption = v.x;
-            this->mirror = v.y;
-            this->fresnel = v.z;
+            float tot = absorption + mirror + fresnel;
+            this->absorption = absorption / tot ;
+            this->mirror = mirror / tot;
+            this->fresnel = fresnel / tot;
         }
     }
 }

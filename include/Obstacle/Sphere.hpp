@@ -10,7 +10,7 @@ namespace Ray2d {
         public:
             glm::vec2 center;
             float radius;
-            Material *material;
+            Material material;
 
             Sphere(const glm::vec2 &center, const float &radius, Material material);
             virtual float rayIntersect(Ray &ray) override;

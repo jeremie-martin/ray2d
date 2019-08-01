@@ -11,6 +11,7 @@ namespace Ray2d {
             float mirror;
             float fresnel;
             float ior;
+            Material(void);
             Material(float absorption, float mirror, float fresnel, float ior);
         };
 

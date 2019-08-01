@@ -2,11 +2,7 @@
 
 namespace Ray2d {
     namespace Computations {
-        Sphere::Sphere(const glm::vec2 &center, const float &radius, Material material) : center(center), radius(radius) {
-            puts("aaa");
-            this->material = &material;
-            puts("bbb");
-        }
+        Sphere::Sphere(const glm::vec2 &center, const float &radius, Material material) : center(center), radius(radius), material(material) { }
 
         float Sphere::rayIntersect(Ray &ray)  {
             glm::vec2 oc = ray.origin - center;
@@ -35,7 +31,7 @@ namespace Ray2d {
         }
 
         Material& Sphere::getMaterial(void) {
-            return *material;
+            return material;
         }
    
     }

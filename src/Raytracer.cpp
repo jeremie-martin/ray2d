@@ -2,23 +2,13 @@
 
 namespace Ray2d {
     namespace Computations {
-        Raytracer::Raytracer(Graphics::Renderer &renderer, const int batch, const int max_depth) :
-        renderer(&renderer), batch(batch), max_depth(max_depth), compute(true), light_nb(0), obstacle_nb(0), ray_ind(0) {
+        Raytracer::Raytracer(Graphics::Renderer &renderer, std::vector<Obstacle*> &obstacle, std::vector<Light*> &light, const int batch, const int max_depth) :
+        renderer(&renderer), obstacle(obstacle), light(light), batch(batch), max_depth(max_depth), compute(true), light_nb(0), obstacle_nb(0), ray_ind(0) {
             rayVertice.resize(batch*2 + max_depth*2);
             rayColor.resize(batch*2 + max_depth*2);
         }
 
         void Raytracer::run(void) {
-            //obstacle.push_back(new Segment(glm::vec2(1.2f, -0.4f), glm::vec2(1.4, 0.3f)));
-            //obstacle.push_back(new Segment(glm::vec2(-1.5, 0.7f), glm::vec2(-1.2f, 0.1f)));
-            //obstacle.push_back(new Segment(glm::vec2(-0.4, -0.6f), glm::vec2(-0.2f, -0.8f)));
-            obstacle.push_back(new Sphere(glm::vec2(0.3f, -0.4f), 0.4f, Material(0.0, 0.5, 0.0, 1.5)));
-            //light.push_back(new SegmentLight(glm::vec2(-0.3f, -0.2f), glm::vec2(-0.8f, 0.5f), 1.0f));
-            light.push_back(new PointLight(glm::vec2(1.4f, 0.3f), std::vector<int>({550}), 3.0f));
-            //light.push_back(new PointLight(glm::vec2(-1.0f, 0.8f), std::vector<int>({425, 450, 475, 500, 525, 550}), 5.0f));
-            std::vector<int> wavelengths(WAVELENGTH_NB);
-            std::generate(wavelengths.begin(), wavelengths.end(), [n = WAVELENGTH_MIN] () mutable { return n++; });
-            light.push_back(new PointLight(glm::vec2(-1.0f, 0.8f), wavelengths, 20.0f));
             obstacle_nb = obstacle.size();
             light_nb = light.size();
 
