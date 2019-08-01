@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <glm/gtx/rotate_vector.hpp>
 
 namespace Ray2d {
     namespace Computations {
@@ -23,7 +24,6 @@ namespace Ray2d {
             void setOrigin(const glm::vec2 &newOrigin);
             void setDir(const glm::vec2 &newDir);
             void setColor(const int &newColor);
-
             void reflect(glm::vec2 normal);
         };
     }

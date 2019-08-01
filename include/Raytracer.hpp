@@ -7,13 +7,17 @@
 #include "Light/SegmentLight.hpp"
 #include "Obstacle/Obstacle.hpp"
 #include "Obstacle/Segment.hpp"
+#include "Obstacle/Sphere.hpp"
 #include "Renderer.hpp"
 #include "Ray.hpp"
 #include "Utils.hpp"
+#include <algorithm>
+#include <vector>
+
 
 namespace Ray2d {
     namespace Computations {
-        #define INF 100000000000.0
+        #define INF 10000000000.0f
 
         class Raytracer {
         private:
@@ -35,6 +39,8 @@ namespace Ray2d {
             Light *chooseLight(void);
             std::vector<float> constructVectorOfLigthIntensity(void);
             void rayTrace(Ray &ray, int depth = 0);
+            void mirror(Ray &ray, Obstacle &obstacle_nearest, glm::vec2 &intersection);
+            void fresnel(Ray &ray, Obstacle &obstacle_nearest, Material &mat, glm::vec2 &intersection);
             void addRayToBatch(glm::vec2 &p1, glm::vec2 &p2, int color);
 
         public:

@@ -11,16 +11,14 @@ namespace Ray2d {
             glm::vec2 vec_p1_p2 = p2 - p1;
             normal = glm::vec2(-vec_p1_p2.y, vec_p1_p2.x);
         }
+        
         SegmentLight::SegmentLight(glm::vec2 p1, glm::vec2 p2, std::vector<int> wavelengths, float intensity) : p1(p1), p2(p2), wavelengths(wavelengths), intensity(intensity), type(POLYCHROMATIC) {
             glm::vec2 vec_p1_p2 = p2 - p1;
             normal = glm::vec2(-vec_p1_p2.y, vec_p1_p2.x);
         }
-        Ray SegmentLight::generateRay(void) {
-            static std::random_device rd;
-            static std::mt19937 gen(rd());
-            static std::uniform_real_distribution<> dis_1_2(0.0f, 1.0f);
 
-            float interpol = dis_1_2(gen);
+        Ray SegmentLight::generateRay(void) {
+            float interpol = dis_0_1(gen);
             float color;
 
             switch (type)

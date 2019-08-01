@@ -7,15 +7,10 @@ namespace Ray2d {
         PointLight::PointLight(glm::vec2 pos, std::vector<int> wavelengths, float intensity) : pos(pos), wavelengths(wavelengths), type(POLYCHROMATIC), intensity(intensity) {}
 
         Ray PointLight::generateRay(void) {
-            static std::random_device rd;
-            static std::mt19937 gen(rd());
-            static std::uniform_real_distribution<> dis_1_2(0, PI*2.0);
-
-            float angle = dis_1_2(gen);
+            float angle = dis_0_2pi(gen);
             float color;
 
-            switch (type)
-            {
+            switch (type) {
             case RAINBOW:
                 color = int((angle * (WAVELENGTH_MAX - WAVELENGTH_MIN) / (PI*2.0)) + WAVELENGTH_MIN);
                 break;

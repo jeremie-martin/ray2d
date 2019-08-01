@@ -1,10 +1,7 @@
 #pragma once
 
 #include "Light/Light.hpp"
-#include "Random.hpp"
 #include <vector>
-
-using Random = effolkronium::random_static;
 
 namespace Ray2d {
     namespace Computations {
